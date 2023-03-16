@@ -1,15 +1,13 @@
-import rabbitmq
-
 license_plates = {}
 
 
 def process_message(init_info):
-    if init_info.license_plate in license_plates.keys():
+    if init_info.get('licenseplate') in license_plates.keys():
         # calculate fee
-        print(init_info.license_plate)
-        del license_plates[init_info.license_plate]
+        print(init_info.get('licenseplate'))
+        del license_plates[init_info.get('licenseplate')]
     else:
         license_plate = init_info.get('licenseplate')
-        init_info.remove('licenseplate')
+        del init_info['licenseplate']
         license_plates[license_plate] = init_info
 

@@ -1,4 +1,5 @@
 import pika
+from calc import process_message
 
 # Set connection parameters
 credentials = pika.PlainCredentials('reader', 'reader')
@@ -31,15 +32,10 @@ def callback(ch, method, properties, body):
     # Convert from string to dictionary
     message_dict = eval(decoded_response)
 
-    # Get separate variables for passing to functions
-    lat = message_dict.get('lat')
-    lon = message_dict.get('lon')
-    license_plate = message_dict.get('licenseplate')
-    toll_gate_id = message_dict.get('id')
-    time = message_dict.get('time')
-
     # Just a test print
-    print(lat, lon, license_plate, toll_gate_id, time)
+    # print(lat, lon, license_plate, toll_gate_id, time)
+
+    process_message(message_dict)
 
 
 # Start consuming messages from the queue
